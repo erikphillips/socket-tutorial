@@ -7,8 +7,26 @@
   <script src="/socket.io/socket.io.js"></script>
   <script>
   	var socket = io();
+  	// socket.on('message', function(data){document.write(data)});
+  	socket.on('testerEvent', function( data ) {
+  		document.getElementById("body").innerHTML+= "<br>" + data.description;
+  	})
+
+  	socket.on('broadcast', function ( data ) {
+  		document.body.innerHTML += "<br>" + data.description;
+  	});
+
+  	socket.on('newclientconnect',function(data){
+		document.body.innerHTML += '<br>' + data.description;
+	 });
+
+  	function emitEvent() {
+  		socket.emit('clientEvent', 'Sent an event from the client!');
+  	}
   </script>
 
-  <body>Hello world</body>
+  <body id="body">Hello world</body>
+
+  <button onclick="emitEvent()">Emit Event</button>
 
 </html>
