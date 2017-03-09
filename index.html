@@ -6,6 +6,11 @@
   
   <script src="/socket.io/socket.io.js"></script>
   <script>
+  	// var socket = io('/my-namespace');
+  	socket.on('hi', function ( data ) {
+  		document.body.innerHTML += "<br>" + data;
+  	});
+
   	var socket = io();
   	// socket.on('message', function(data){document.write(data)});
   	socket.on('testerEvent', function( data ) {
@@ -20,13 +25,19 @@
 		document.body.innerHTML += '<br>' + data.description;
 	 });
 
+  	socket.on('connectToRoom',function(data){
+          document.body.innerHTML += "<br>" + data;
+      });
+
   	function emitEvent() {
   		socket.emit('clientEvent', 'Sent an event from the client!');
   	}
   </script>
 
+  <button onclick="emitEvent()">Emit Client Event</button> <br>
+
   <body id="body">Hello world</body>
 
-  <button onclick="emitEvent()">Emit Event</button>
+  
 
 </html>
